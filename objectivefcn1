@@ -1,0 +1,16 @@
+function f = objectivefcn1(x)
+f = 0;
+data=load ('C:\Users\bakher\Desktop\fminmatlab\data2.txt');
+b=1.2;
+alpha=2;
+T=data(:,2);
+for i= 1:1:219
+    b_0(i)=x(1)+(x(2)/T(i)+(x(3)*log(T(i))));
+    b_1(i)=x(4)+(x(5)/T(i))+(x(6)*(T(i)^2));
+    c(i)=x(7)+(x(8)/T(i))+(x(9)*log(T(i)));
+    A(i)=-61.44534*exp((T(i)-273.15)/273.15) + 2.864468*((exp((T(i)-273.15)/273.15))^2) + 183.5379*log(T(i)/273.15)-0.6820223*(T(i)-273.15)+0.0007875695*((T(i)^2)-(273.15^2)) + 58.95788*(273.15/T(i));    
+    f_1(i)=A(i)*(sqrt(data(i,1))/(1+b*sqrt(data(i,1))));
+      
+    f = f +((1-f_1(i)+data(i,1)*(b_0(i)+b_1(i)*exp(-alpha*sqrt(data(i,1))))+(data(i,1)^2)*c(i))-data(i,3))^2;
+    
+end
